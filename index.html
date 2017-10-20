@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>简易聊天</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<link rel="stylesheet" href="jquery.mobile-1.4.5/demos/css/themes/default/jquery.mobile-1.4.5.min.css"/>
+	<script src="jquery.mobile-1.4.5/demos/js/jquery.min.js"></script>
+	<script src="jquery.mobile-1.4.5/demos/js/jquery.mobile-1.4.5.min.js"></script>
+	<style type="text/css">
+/*登陆页面*/
+	#page2{
+		background: url(images/a.jpg);
+	}
+/*消息页面*/
+	.ui{
+			border-bottom: 1px solid #aaa;
+		}
+		.ui img{
+			border-radius: 50%;
+			overflow: hidden;
+		}
+		.ui a{
+
+		}
+	</style>
+</head>
+<body>
+<!--登陆页面-->
+	<div data-role="page" id="page2">
+		<div data-role="header">
+		</div>
+		<div data-role="content">
+			<img src="images/qq.png" style="margin-top: 70px; width: 100px; margin-bottom: -40px;"/>
+			<h1 style="display: inline;">QQ</h1>
+			<div data-role="fieldcontain">
+				<input type="text" placeholder="QQ号/手机号/邮箱" id="texto"></input>
+				<input type="password" placeholder="密码" id="textt"></input>
+			</div>
+			<input type="submit" id="btnn" value="登录"></input>
+			<a href="#" style="text-decoration: none;">忘记密码？</a>
+			<a href="#page1" style="display: inline; margin-left: 160px; text-decoration: none;">新用户注册</a>
+		</div>
+	</div>
+
+<!--注册页面-->
+	<div data-role="page" id="page1" style="background: url(images/a.jpg);">
+		<div data-role="content" style="height: 519px;">
+			<div data-role="fieldcontain" style="margin-top: 60px;" id="form">
+				<label for="#texto" style="margin-top: 30px;">用户名</label>
+				<input type="text" placeholder="QQ号/手机号/邮箱" id="texto"></input>
+				<label for="#textt" style="margin-top: 30px;">密码</label>
+				<input type="password" id="textt" placeholder="密码"></input>
+			</div>
+			<a href="" data-role="button" id="btn">注册</a>
+		</div>
+	</div>
+
+<!--消息页面-->
+	<div data-role="page" id="page3">
+		<div data-role="header">
+			<a href="#" data-role="none"><img src="images/first.jpg" style="width: 40px;border-radius: 50%;" /></a>
+			<h1>消息</h1>
+			<a href="#" data-role="button" data-icon="plus" data-iconpos="notext">更多</a>
+		</div>
+		<div data-role="content">
+			<ul data-role="listview" data-filter="true" data-filter-placeholder="搜索">
+				<li data-icon="false" class="ui"><a href="#">
+					<img src="images/first.jpg" style="border-radius: 50%;" />
+					<h2>了了悸动</h2>
+					<p>我喜欢你 日月为礼江山为聘</p>
+					<span class="ui-li-count">2</span>
+				</a></li>
+				<li data-icon="false" class="ui"><a href="#">
+					<img src="images/first.jpg"/>
+					<h2>泡芙</h2>
+					<p>我喜欢你 日月为礼江山为聘</p>
+				</a></li>
+				<li data-icon="false" class="ui"><a href="#">
+					<img src="images/first.jpg"/>
+					<h2>来去皆江湖,</h2>
+					<p>我喜欢你 日月为礼江山为聘</p>
+				</a></li>
+				<li data-icon="false" class="ui"><a href="#">
+					<img src="images/first.jpg"/>
+					<h2>再遇太难</h2>
+					<p>我喜欢你 日月为礼江山为聘</p>
+					<span class="ui-li-count">5</span>
+				</a></li>
+				<li data-icon="false" class="ui"><a href="#">
+					<img src="images/first.jpg" style="border-radius: 50%;" />
+					<h2>炸了你一下.</h2>
+					<p>我喜欢你 日月为礼江山为聘</p>
+					<span class="ui-li-count">3</span>
+				</a></li>
+				<li data-icon="false" class="ui"><a href="#">
+					<img src="images/first.jpg" style="border-radius: 50%;" />
+					<h2>闲身</h2>
+					<p>我喜欢你 日月为礼江山为聘</p>
+				</a></li>
+			</ul>
+		</div>
+		<div data-role="footer" data-position="fixed" style="text-align: center;">
+			<div data-role="controlgroup" data-type="horizontal">
+				<a href="#" data-role="button" data-icon="comment" data-iconpos="top" style="width: 90px;margin-right: 20px;">消息</a>
+				<a href="#" data-role="button" data-icon="user" data-iconpos="top" style="width: 90px;margin-right: 20px;">联系人</a>
+				<a href="#" data-role="button" data-icon="star" data-iconpos="top" style="width: 90px;margin-right: 0px;">动态</a>
+			</div>
+		</div>
+	</div>
+
+</body>
+<script>
+	//登录
+	$('#btnn').click(function(){
+		$.ajax({
+			type:'get',
+			url:'http://datainfo.duapp.com/shopdata/userinfo.php',
+			dataType:'json',
+			data:{
+				status:'login',
+				userID:$('#texto').val(),
+				password:$('#textt').val()
+			},
+			success:function(data){
+				if(data == 0){
+					alert('用户名不存在');
+				}
+				else if(data == 2){
+					alert('用户名与密码不符');
+				}
+				else window.location.href="#page3";
+			},
+			error:function(){
+				alert('error');
+			}
+		})
+	})
+
+	//注册
+	$('#btn').click(function(){
+		$.ajax({
+			type:'get',
+			url:'http://datainfo.duapp.com/shopdata/userinfo.php',
+			dataType:'json',
+			data:{
+				status:'register',
+				userID:$('#texto').val(),
+				password:$('#textt').val()
+			},
+			success:function(data){
+				if(data == 0){
+					alert('用户名重名');
+				}
+				else if(data == 1){
+					window.location.href="#page2";
+				}
+				else if(data == 2){
+					alert('error');
+				}
+			}
+		})
+	})
+</script>
+</html>
